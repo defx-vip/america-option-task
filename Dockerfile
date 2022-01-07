@@ -1,9 +1,10 @@
-FROM node:9.2.1-alpine
+FROM node:14.18-alpine
 WORKDIR /app
 # Bundle APP files
 COPY package*.json ./
-COPY build build
+COPY src src
+COPY node_modules node_modules
 COPY abi abi
 # f:file c:contract k:key g:thegraph_url
-ENV f=${f} f=${c} k=${k} g=${g}
-CMD node build/${f} ${k} ${c} ${g}
+ENV f=${f} c=${c} k=${k} t=${t} g=${g} 
+CMD node src/${f} ${k} ${c} ${g} ${t}

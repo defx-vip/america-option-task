@@ -1,7 +1,7 @@
 import {fetch}  from 'cross-fetch';
 import fs from 'fs';
-import Web3 from 'web3';
 import {createClient} from '@urql/core';
+import Web3 from 'web3';
 
 let web3  = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545");
 let thegraph_url = "https://api.thegraph.com/subgraphs/name/honcur/american-option";
@@ -24,7 +24,7 @@ async function start() {
     let key = args[0];
     let contractAddress = args[1];
     thegraph_url = args[2];
-    if(args.length > 4) {
+    if(args.length >= 4) {
         timeout = args[3]
     }
     console.info(`key = ${key}, address: ${contractAddress}, thegraph_url: ${thegraph_url}, timeout: ${timeout}`);
@@ -51,7 +51,7 @@ async function next(client, account1, contract) {
         try {
             let res =  await (client.query(QUERY, { first: 5, now: getNowSceond() }).toPromise())
             //console.info(res)
-            console.info(res.data.options)
+            console.info(res.data.options + getNowSceond())
             let map = data2map(res.data.options)
             handleData(map, account1, contract)
         } catch(e) {
