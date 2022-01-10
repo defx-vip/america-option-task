@@ -25,7 +25,7 @@ async function start() {
     let contractAddress = args[1];
     thegraph_url = args[2];
     if(args.length >= 4) {
-        timeout = args[3]
+        timeout = 1000 * args[3]
     }
     console.info(`key = ${key}, address: ${contractAddress}, thegraph_url: ${thegraph_url}, timeout: ${timeout}`);
  
