@@ -6,5 +6,5 @@ COPY src src
 COPY node_modules node_modules
 COPY abi abi
 # f:file c:contract k:key g:thegraph_url
-ENV f=${f}
-CMD node src/${f}
+ENV f=${f} e=${e}
+CMD NODE_ENV=${e} node src/${f}

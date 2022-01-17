@@ -58,6 +58,7 @@ async function next(interval) {
             await handleData(map, account, contract)
         } catch(e) {
             console.error(e)
+            next(interval) 
         }
         next(interval) 
     }, interval)

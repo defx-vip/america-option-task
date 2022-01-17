@@ -13,9 +13,10 @@ this is app of price prediction execute task
 1.  ./test_script.sh
 
 #### dokcer
-1. docker build -t price_prediction .
+1. docker build -t america_option_task .
 #### docker run
 1. 5min bnb price prediction
- docker run -d --name option_task -e f="app.mjs" -e c="0xD7eF8d37a05E640cfc4d6735ca65F4C885B09c6e" -e k="9e5db2ec772b34b5e111963eb2c451fed87e83a08665fe9426e93e8f3645aaba" -e t=120000 -e g="https://api.thegraph.com/subgraphs/name/honcur/american-option" a8a06f347c9f
+ docker run -d --name option_task -e f="app.mjs" -e e="devApp" -v /share/project/defx/america-option-task/config:/app/config b97f2b099979
 
+  docker run -d --name option_task_exerciser -e f="exerciser.mjs" -e e="dev" -v /share/project/defx/america-option-task/config:/app/config b97f2b099979
 
