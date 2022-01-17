@@ -1,1 +1,1 @@
-node src/app.mjs 9e5db2ec772b34b5e111963eb2c451fed87e83a08665fe9426e93e8f3645aaba 0xD7eF8d37a05E640cfc4d6735ca65F4C885B09c6e https://api.thegraph.com/subgraphs/name/honcur/american-option 60000
+NODE_ENV=devApp node src/app.mjs

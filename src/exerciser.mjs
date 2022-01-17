@@ -3,6 +3,7 @@ import fs from 'fs';
 import {createClient} from '@urql/core';
 import Web3 from 'web3';
 import {BNB_AGGREGATOR, ETH_AGGREGATOR} from './constants.mjs';
+import config from './config.js'
 const QUERY = `
 query Test($first: Int!, $now: BigInt!, $excrciserTime: BigInt!) {
   options(first: $first, orderBy:source, 
@@ -14,13 +15,11 @@ query Test($first: Int!, $now: BigInt!, $excrciserTime: BigInt!) {
     symbol
     user {
         id
-        
     }
   }
 }`;
 
-let timeout ;
-let exerciser_bf_time;
+
 let web3;
 let contract;
 let options_manager_contract;
@@ -29,6 +28,7 @@ let client;
 let exerciser;
 let bnb_aggregator;
 let eth_aggregator;
+
 /** 
  * args[0] = 用户秘钥
  * args[1] = Exerciser合约地址
@@ -39,33 +39,20 @@ let eth_aggregator;
  * args[6] = 查询期权订单thegraph URL
  * */ 
 async function start() {
-    let args = process.argv.slice(2);
-    if(args.length < 7) {
-        console.info("args error");
-        return;
-    }
-    exerciser = args[1].trim();
-    timeout = 1000 * args[3]
-    exerciser_bf_time = Number(args[4])
-   
     console.info(`
-        key = ${args[0]}, Exerciser: ${args[1]},
-        OptionsManager: ${args[2]}
-        timeout: ${args[3]}, exerciser_bf_time: ${args[4]}
-        web3_url: ${args[5]}, thegraph_url: ${args[6]},
-      
+    ${JSON.stringify(config)}
     `);
-
-    web3 = new Web3(args[5].trim());
-    await initAccount(args[0].trim());
-    initContract(args[1].trim(), args[2].trim());
+    web3 = new Web3(config.rpc_url.trim());
+    await initAccount(config.secret_key.trim());
+    exerciser = config.exercise_address.trim();
+    initContract(config.exercise_address.trim(), config.options_manager_address.trim());
     client = createClient({
-        url: args[6].trim(),
+        url: config.thegraph_url,
        fetch: fetch
     });
     console.info("app starting ..." );
     console.info("-------------------------------------" ); 
-    next()
+    next(1000 * config.interval, config.exerciser_bf_time)
 }
 
 async function initAccount(key) {
@@ -92,7 +79,7 @@ function initContract(exercise_address,  options_manager_address) {
     eth_aggregator = new web3.eth.Contract(json_interface, ETH_AGGREGATOR);
     
 }
-async function next() {
+async function next(timeout, exerciser_bf_time) {
     setTimeout(async () => {
         try {
             let now = getNowSceond();
@@ -105,7 +92,7 @@ async function next() {
         } catch(e) {
             console.error(e)
         }
-        next() 
+        next(timeout, exerciser_bf_time)
     }, timeout)
 }
 
