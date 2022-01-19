@@ -91,7 +91,7 @@ async function next(timeout, exerciser_bf_time) {
             exercise(res.data.options)
         } catch(e) {
             console.error(e)
-            next(timeout, exerciser_bf_time)
+            //next(timeout, exerciser_bf_time)
         }
         next(timeout, exerciser_bf_time)
     }, timeout)

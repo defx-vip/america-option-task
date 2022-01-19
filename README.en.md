@@ -16,7 +16,7 @@ this is app of price prediction execute task
 1. docker build -t america_option_task .
 #### docker run
 1. 5min bnb price prediction
- docker run -d --name option_task -e f="app.mjs" -e e="devApp" -v /share/project/defx/america-option-task/config:/app/config b97f2b099979
+ docker run -d --name option_task -e f="app.mjs" -e e="devApp" -v /share/project/defx/america-option-task/config:/app/config 832f4599c8f6
 
-  docker run -d --name option_task_exerciser -e f="exerciser.mjs" -e e="dev" -v /share/project/defx/america-option-task/config:/app/config b97f2b099979
+  docker run -d --name option_task_exerciser -e f="exerciser.mjs" -e e="dev" -v /share/project/defx/america-option-task/config:/app/config 832f4599c8f6
 
